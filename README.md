@@ -1,51 +1,55 @@
-# 🔐 Secure Password Generator
+# 🔐 Sicherer Passwort-Generator
 
-A modern, client-side password generator built with **HTML, CSS and Vanilla JavaScript**, designed as an IT portfolio project.
+Ein moderner, clientseitiger Passwort-Generator, entwickelt mit **HTML5, CSS3 und Vanilla JavaScript**.
 
-The application generates customizable passwords directly in the browser using the **Web Crypto API**, without sending passwords to a server.
+Das Projekt wurde als Teil meines IT-Portfolios entwickelt und zeigt praktische Kenntnisse in **Webentwicklung, JavaScript und grundlegenden Cybersecurity-Konzepten**.
+
+Die Passwörter werden direkt im Browser mit der **Web Crypto API** generiert und nicht an einen Server übertragen.
 
 ## 🚀 Live Demo
 
-**[View Live Demo](YOUR-NETLIFY-LINK)**
+**[Live Demo öffnen](DEIN-NETLIFY-LINK)**
 
-## ✨ Features
+## ✨ Funktionen
 
-* 🔐 Cryptographically secure password generation
-* 📏 Custom password length
-* 🔤 Uppercase and lowercase letters
-* 🔢 Numbers
-* 🔣 Special characters
-* 🚫 Exclude similar characters (`0`, `O`, `I`, `l`, `1`)
-* 📊 Password strength analysis
-* 🧮 Theoretical entropy estimation
-* ⏱️ Estimated offline brute-force time
-* 📋 Copy password to clipboard
-* 👁️ Show / hide password
-* ⚡ Quick password presets
-* 📱 Responsive design
-* ♿ Accessibility-focused interface
+* 🔐 Kryptografisch sichere Passwortgenerierung
+* 📏 Individuelle Passwortlänge
+* 🔤 Groß- und Kleinbuchstaben
+* 🔢 Zahlen
+* 🔣 Sonderzeichen
+* 🚫 Ausschluss ähnlicher Zeichen (`0`, `O`, `I`, `l`, `1`)
+* 📊 Passwortstärke-Anzeige
+* 🧮 Theoretische Entropie-Berechnung
+* ⏱️ Geschätzte Offline-Brute-Force-Zeit
+* 📋 Passwort in die Zwischenablage kopieren
+* 👁️ Passwort anzeigen / verbergen
+* ⚡ Voreinstellungen für verschiedene Passworttypen
+* 📱 Responsive Design
+* ♿ Fokus auf Accessibility
 
-## 🛡️ Security
+## 🛡️ Sicherheit
 
-The password generator uses the browser's **Web Crypto API** with `crypto.getRandomValues()` instead of `Math.random()`.
+Für die Generierung zufälliger Werte wird die **Web Crypto API** mit `crypto.getRandomValues()` verwendet.
 
-A rejection-sampling approach is used to avoid modulo bias when generating random indexes.
+Im Gegensatz zu `Math.random()` ist diese Methode für kryptografisch relevante Zufallswerte geeignet.
 
-Passwords are generated **locally in the browser** and are not sent to a server.
+Zusätzlich wird **Rejection Sampling** verwendet, um Verzerrungen bei der Auswahl zufälliger Zeichen zu vermeiden.
 
-> The displayed brute-force time is only an estimate based on an assumed attack rate and should not be interpreted as a guarantee of real-world security.
+Die Passwörter werden **lokal im Browser** erzeugt und nicht an einen Server gesendet.
 
-## 🧠 How It Works
+> Die angezeigte Brute-Force-Zeit ist lediglich eine Schätzung und basiert auf einer angenommenen Angriffsgeschwindigkeit. Sie stellt keine Garantie für die tatsächliche Sicherheit eines Passworts dar.
 
-1. The user selects the desired password length.
-2. Character sets are selected according to the user's preferences.
-3. Secure random values are generated using `crypto.getRandomValues()`.
-4. At least one character from each selected character set is included.
-5. The generated characters are shuffled using a cryptographically secure Fisher-Yates shuffle.
-6. The application calculates theoretical entropy and displays a security estimate.
-7. The password can be copied directly to the clipboard.
+## 🧠 Funktionsweise
 
-## 🛠️ Technologies
+1. Der Benutzer wählt die gewünschte Passwortlänge.
+2. Die gewünschten Zeichensätze werden ausgewählt.
+3. Sichere Zufallswerte werden mit `crypto.getRandomValues()` erzeugt.
+4. Mindestens ein Zeichen aus jedem ausgewählten Zeichensatz wird verwendet.
+5. Die Zeichen werden mit einem kryptografisch sicheren Fisher-Yates-Algorithmus gemischt.
+6. Die theoretische Entropie und eine Sicherheitsbewertung werden berechnet.
+7. Das generierte Passwort kann in die Zwischenablage kopiert werden.
+
+## 🛠️ Verwendete Technologien
 
 * HTML5
 * CSS3
@@ -53,9 +57,9 @@ Passwords are generated **locally in the browser** and are not sent to a server.
 * Web Crypto API
 * Clipboard API
 * Responsive CSS
-* CSS Variables
+* CSS Custom Properties
 
-## 📂 Project Structure
+## 📂 Projektstruktur
 
 ```text
 password-generator/
@@ -66,33 +70,34 @@ password-generator/
 └── README.md
 ```
 
-## 📚 What I Learned
+## 📚 Was ich gelernt habe
 
-Through this project, I practiced:
+Durch dieses Projekt konnte ich praktische Erfahrungen sammeln in:
 
-* JavaScript DOM manipulation
-* Event handling
-* Secure random number generation
+* JavaScript DOM-Manipulation
+* Event Handling
+* sicherer Zufallszahlengenerierung
 * Web Crypto API
-* Password security concepts
-* Entropy calculation
-* Input validation
+* grundlegenden Cybersecurity-Konzepten
+* Entropie-Berechnung
+* Input-Validierung
 * Clipboard API
-* Responsive web design
+* Responsive Webdesign
 * Accessibility
-* Clean code organization
+* sauberer Code-Struktur
 
-## 🎯 Project Goal
+## 🎯 Ziel des Projekts
 
-This project was created as part of my IT portfolio to demonstrate practical skills in **web development, JavaScript and basic cybersecurity concepts**.
+Dieses Projekt ist Teil meines IT-Portfolios und soll meine praktischen Kenntnisse in **Webentwicklung, JavaScript und grundlegender IT-Sicherheit** zeigen.
 
-## 👨‍💻 Author
+## 👨‍💻 Autor
 
 **Mouhaned Zbedi**
 
-Aspiring Fachinformatiker
-Tunisia 🇹🇳 → Germany 🇩🇪
+Angehender Fachinformatiker
+
+🇹🇳 Tunesien → 🇩🇪 Deutschland
 
 ---
 
-⭐ If you find this project useful, feel free to give it a star.
+⭐ Vielen Dank für das Interesse an meinem Projekt!
