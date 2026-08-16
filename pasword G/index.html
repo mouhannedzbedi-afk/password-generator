@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Ein professioneller, sicherer Passwort-Generator mit Web Crypto API für IT-Portfolios. Lokal, anonym und performant.">
+  <meta name="author" content="Fachinformatiker Bewerber">
+  <title>Sicherer Passwort-Generator | IT-Portfolio Showcase</title>
+
+  <!-- Google Fonts: Inter & JetBrains Mono for optimal readability -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Background Glow & Grid Canvas Accent -->
+  <div class="bg-glow" aria-hidden="true"></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <div class="app-container">
+
+    <!-- Header Section -->
+    <header class="app-header">
+      <div class="portfolio-badge">
+        <span class="badge-dot"></span>
+        <span class="badge-text">Fachinformatiker Portfolio Projekt</span>
+      </div>
+      <h1 class="app-title">
+        <svg class="title-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+        Passwort-Generator
+      </h1>
+      <p class="app-subtitle">
+        Erzeugen Sie kryptografisch sichere Zufallspasswörter direkt in Ihrem Browser – ohne Serverübertragung.
+      </p>
+    </header>
+
+    <!-- Main Generator Card -->
+    <main class="generator-card" id="main-content">
+      
+      <!-- Password Output & Main Controls -->
+      <section class="password-display-section" aria-label="Passwort-Ausgabe">
+        <div class="password-field-container">
+          <input 
+            type="password" 
+            id="passwordOutput" 
+            class="password-input" 
+            readonly 
+            aria-label="Generiertes Passwort" 
+            placeholder="Passwort wird generiert..."
+            autocomplete="off"
+            spellcheck="false"
+          >
+          <div class="output-actions">
+            <button 
+              type="button" 
+              id="toggleVisibilityBtn" 
+              class="icon-btn" 
+              title="Passwort anzeigen / verbergen"
+              aria-label="Passwort anzeigen oder verbergen"
+            >
+              <!-- Eye Icon (Show) -->
+              <svg class="icon eye-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <!-- Eye Off Icon (Hide) -->
+              <svg class="icon eye-off-icon hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+              </svg>
+            </button>
+
+            <button 
+              type="button" 
+              id="regenerateBtn" 
+              class="icon-btn" 
+              title="Neues Passwort generieren" 
+              aria-label="Neues Passwort generieren"
+            >
+              <svg class="icon refresh-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <polyline points="1 20 1 14 7 14"></polyline>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="button" id="copyBtn" class="btn primary-btn copy-btn">
+          <svg class="btn-icon copy-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <svg class="btn-icon check-icon hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <span id="copyBtnText">Passwort kopieren</span>
+        </button>
+      </section>
+
+      <!-- Password Strength & Security Analysis -->
+      <section class="strength-section" aria-label="Sicherheitsbewertung">
+        <div class="strength-header">
+          <span class="strength-title">Passwortstärke</span>
+          <span id="strengthBadge" class="strength-badge level-strong">Stark</span>
+        </div>
+
+        <!-- 4-segment visual indicator -->
+        <div class="strength-meter-bar" id="strengthMeter" aria-label="Visuelle Stärke-Anzeige">
+          <div class="meter-segment"></div>
+          <div class="meter-segment"></div>
+          <div class="meter-segment"></div>
+          <div class="meter-segment"></div>
+        </div>
+
+        <!-- Technical Metrics (Entropy & Crack Time) -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <span class="metric-label">Theoretische Entropie</span>
+            <span id="entropyValue" class="metric-value">72.5 Bit</span>
+            <span class="metric-subtext">Länge × log₂(Zeichensatz)</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-label">Geschätzte Offline-Brute-Force-Zeit</span>
+            <span id="crackTimeValue" class="metric-value">~ 1,4 Mio. Jahre</span>
+            <span class="metric-subtext">Angenommen: 10 Mrd. Versuche/Sek.</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Generator Settings & Options -->
+      <section class="settings-section" aria-label="Passwort-Einstellungen">
+        
+        <!-- Length Controls -->
+        <div class="setting-group">
+          <div class="setting-header">
+            <label for="lengthSlider" class="setting-label">Passwortlänge</label>
+            <div class="length-display">
+              <input 
+                type="number" 
+                id="lengthInput" 
+                min="6" 
+                max="32" 
+                value="16" 
+                aria-label="Passwortlänge in Zeichen"
+              >
+              <span class="unit-label">Zeichen</span>
+            </div>
+          </div>
+          <div class="slider-wrapper">
+            <input 
+              type="range" 
+              id="lengthSlider" 
+              min="6" 
+              max="32" 
+              value="16" 
+              step="1"
+              aria-label="Passwortlänge Regler"
+            >
+          </div>
+        </div>
+
+        <!-- Quick Presets -->
+        <div class="presets-wrapper">
+          <span class="presets-label">Schnell-Auswahl:</span>
+          <div class="preset-buttons">
+            <button type="button" class="preset-btn" data-preset="pin">PIN (6-stellig)</button>
+            <button type="button" class="preset-btn active" data-preset="standard">Standard (16)</button>
+            <button type="button" class="preset-btn" data-preset="strong">Stark (24)</button>
+            <button type="button" class="preset-btn" data-preset="maximum">Maximal (32)</button>
+          </div>
+        </div>
+
+        <!-- Character Types Selection -->
+        <fieldset class="character-options">
+          <legend class="options-title">Enthaltene Zeichensätze</legend>
+          
+          <div class="options-grid">
+            <label class="custom-checkbox">
+              <input type="checkbox" id="includeUppercase" checked>
+              <span class="checkmark"></span>
+              <span class="checkbox-label-text">
+                Großbuchstaben
+                <span class="char-sample">(A–Z)</span>
+              </span>
+            </label>
+
+            <label class="custom-checkbox">
+              <input type="checkbox" id="includeLowercase" checked>
+              <span class="checkmark"></span>
+              <span class="checkbox-label-text">
+                Kleinbuchstaben
+                <span class="char-sample">(a–z)</span>
+              </span>
+            </label>
+
+            <label class="custom-checkbox">
+              <input type="checkbox" id="includeNumbers" checked>
+              <span class="checkmark"></span>
+              <span class="checkbox-label-text">
+                Zahlen
+                <span class="char-sample">(0–9)</span>
+              </span>
+            </label>
+
+            <label class="custom-checkbox">
+              <input type="checkbox" id="includeSymbols" checked>
+              <span class="checkmark"></span>
+              <span class="checkbox-label-text">
+                Sonderzeichen
+                <span class="char-sample">(!@#$%^&*)</span>
+              </span>
+            </label>
+          </div>
+
+          <!-- Advanced Filter Option -->
+          <div class="advanced-option">
+            <label class="custom-checkbox">
+              <input type="checkbox" id="excludeSimilar">
+              <span class="checkmark"></span>
+              <span class="checkbox-label-text">
+                Ähnliche Zeichen ausschließen
+                <span class="char-sample">(z. B. 0, O, I, l, 1)</span>
+              </span>
+            </label>
+          </div>
+
+          <!-- Alert for minimum selection requirement -->
+          <div id="selectionWarning" class="warning-alert hidden" role="alert">
+            <svg class="alert-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <span>Mindestens ein Zeichensatz muss ausgewählt sein.</span>
+          </div>
+        </fieldset>
+      </section>
+
+      <!-- Security Notice Card -->
+      <section class="security-info-box" aria-label="Sicherheits-Information">
+        <div class="info-icon-wrapper">
+          <svg class="info-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            <path d="M9 12l2 2 4-4"></path>
+          </svg>
+        </div>
+        <div class="info-content">
+          <h2 class="info-heading">100% Lokale Sicherheit & Datenschutz</h2>
+          <p class="info-text">
+            Die Passwörter werden direkt im Browser generiert und nicht an einen Server gesendet. Die Anwendung nutzt die Web Crypto API (<code>crypto.getRandomValues()</code>) für echte, kryptografisch sichere Zufallswerte.
+          </p>
+        </div>
+      </section>
+
+      <!-- Portfolio Information Section -->
+      <footer class="portfolio-section">
+        <h2 class="portfolio-title">Über dieses Projekt</h2>
+        <p class="portfolio-description">
+          Ein moderner Passwort-Generator mit konfigurierbarer Passwortlänge, Zeichenoptionen und Sicherheitsbewertung. Die Passwörter werden lokal im Browser mit der Web Crypto API generiert.
+        </p>
+
+        <div class="tech-stack">
+          <span class="tech-title">Technologien:</span>
+          <div class="tech-tags">
+            <span class="tech-tag">HTML5</span>
+            <span class="tech-tag">CSS3</span>
+            <span class="tech-tag">JavaScript</span>
+            <span class="tech-tag">Web Crypto API</span>
+          </div>
+        </div>
+      </footer>
+
+    </main>
+
+    <!-- Toast Notification Container -->
+    <div id="toastNotification" class="toast hidden" role="status" aria-live="polite">
+      <svg class="toast-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+      </svg>
+      <span id="toastMessage">Passwort erfolgreich in die Zwischenablage kopiert!</span>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

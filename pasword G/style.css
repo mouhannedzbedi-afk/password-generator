@@ -1,0 +1,970 @@
+/* ==========================================================================
+   Sicherer Passwort-Generator - CSS Design System & Stylesheet
+   Fachinformatiker Portfolio Showcase
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. CSS Custom Properties / Design Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* Color Palette - Cybersecurity Dark Theme */
+  --bg-dark: #070a12;
+  --bg-card: rgba(15, 23, 42, 0.75);
+  --bg-card-border: rgba(30, 41, 59, 0.8);
+  --bg-input: #0b1120;
+  --bg-input-border: #1e293b;
+  --bg-input-hover: #1e293b;
+
+  /* Accent Colors */
+  --accent-cyan: #06b6d4;
+  --accent-cyan-hover: #22d3ee;
+  --accent-cyan-glow: rgba(6, 182, 212, 0.25);
+  
+  --accent-emerald: #10b981;
+  --accent-emerald-glow: rgba(16, 185, 129, 0.25);
+
+  /* Strength Status Colors */
+  --color-weak: #ef4444;
+  --color-weak-bg: rgba(239, 68, 68, 0.15);
+  --color-medium: #f59e0b;
+  --color-medium-bg: rgba(245, 158, 11, 0.15);
+  --color-strong: #10b981;
+  --color-strong-bg: rgba(16, 185, 129, 0.15);
+  --color-very-strong: #06b6d4;
+  --color-very-strong-bg: rgba(6, 182, 212, 0.15);
+
+  /* Text Colors */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  /* Typography */
+  --font-ui: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', Consolas, Monaco, 'Andale Mono', monospace;
+
+  /* Spacing & Layout */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+  --shadow-card: 0 20px 50px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 30px rgba(6, 182, 212, 0.15);
+  
+  /* Transitions */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --------------------------------------------------------------------------
+   2. CSS Reset & Base Styles
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-ui);
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem 1rem;
+  line-height: 1.6;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --------------------------------------------------------------------------
+   3. Background Decorative Effects
+   -------------------------------------------------------------------------- */
+.bg-glow {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 650px;
+  height: 650px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, rgba(16, 185, 129, 0.05) 45%, rgba(0,0,0,0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bg-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* --------------------------------------------------------------------------
+   4. App Wrapper & Header
+   -------------------------------------------------------------------------- */
+.app-container {
+  width: 100%;
+  max-width: 580px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.app-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.portfolio-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.25);
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-cyan-hover);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.badge-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--accent-cyan);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--accent-cyan);
+  animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.app-title {
+  font-size: clamp(1.75rem, 5vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.title-icon {
+  width: 32px;
+  height: 32px;
+  color: var(--accent-cyan);
+  filter: drop-shadow(0 0 8px var(--accent-cyan-glow));
+}
+
+.app-subtitle {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  max-width: 460px;
+}
+
+/* --------------------------------------------------------------------------
+   5. Main Generator Card (Glassmorphism)
+   -------------------------------------------------------------------------- */
+.generator-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--bg-card-border);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-card), var(--shadow-glow);
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+/* --------------------------------------------------------------------------
+   6. Password Display & Action Buttons
+   -------------------------------------------------------------------------- */
+.password-display-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.password-field-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--bg-input);
+  border: 1.5px solid var(--bg-input-border);
+  border-radius: var(--radius-md);
+  padding: 0.35rem 0.5rem 0.35rem 1.25rem;
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.password-field-container:focus-within {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 3px var(--accent-cyan-glow);
+}
+
+.password-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-mono);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.08em;
+  padding: 0.65rem 0;
+  cursor: text;
+}
+
+.password-input::placeholder {
+  color: var(--text-muted);
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  letter-spacing: normal;
+  font-weight: 400;
+}
+
+.output-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color var(--transition-fast), background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.icon-btn:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-input-hover);
+}
+
+.icon-btn:active {
+  transform: scale(0.92);
+}
+
+.icon-btn:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 2px;
+}
+
+.icon-btn .icon {
+  width: 20px;
+  height: 20px;
+}
+
+.refresh-icon {
+  transition: transform 0.4s ease;
+}
+
+.icon-btn:hover .refresh-icon {
+  transform: rotate(90deg);
+}
+
+/* Primary Copy Button */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  padding: 0.9rem 1.5rem;
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, var(--accent-cyan) 0%, #0284c7 100%);
+  color: #000000;
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+}
+
+.primary-btn:hover {
+  background: linear-gradient(135deg, var(--accent-cyan-hover) 0%, #0369a1 100%);
+  box-shadow: 0 6px 20px rgba(6, 182, 212, 0.45);
+  transform: translateY(-1px);
+}
+
+.primary-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.primary-btn:focus-visible {
+  outline: 3px solid var(--text-primary);
+  outline-offset: 2px;
+}
+
+.btn-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Copy success feedback state */
+.copy-btn.copied {
+  background: linear-gradient(135deg, var(--accent-emerald) 0%, #059669 100%) !important;
+  box-shadow: 0 4px 15px var(--accent-emerald-glow) !important;
+  color: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   7. Password Strength Gauge & Metrics
+   -------------------------------------------------------------------------- */
+.strength-section {
+  background: rgba(11, 17, 32, 0.6);
+  border: 1px solid rgba(30, 41, 59, 0.6);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.strength-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.strength-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.strength-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: all var(--transition-normal);
+}
+
+.strength-badge.level-weak {
+  background: var(--color-weak-bg);
+  color: var(--color-weak);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.strength-badge.level-medium {
+  background: var(--color-medium-bg);
+  color: var(--color-medium);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.strength-badge.level-strong {
+  background: var(--color-strong-bg);
+  color: var(--color-strong);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.strength-badge.level-very-strong {
+  background: var(--color-very-strong-bg);
+  color: var(--color-very-strong);
+  border: 1px solid rgba(6, 182, 212, 0.4);
+}
+
+/* Visual Meter Bar */
+.strength-meter-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  height: 8px;
+}
+
+.meter-segment {
+  background: var(--bg-input-border);
+  border-radius: 4px;
+  transition: background-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+/* Meter state classes applied via JS */
+.strength-meter-bar[data-score="1"] .meter-segment:nth-child(1) {
+  background-color: var(--color-weak);
+  box-shadow: 0 0 8px var(--color-weak);
+}
+
+.strength-meter-bar[data-score="2"] .meter-segment:nth-child(-n+2) {
+  background-color: var(--color-medium);
+  box-shadow: 0 0 8px var(--color-medium);
+}
+
+.strength-meter-bar[data-score="3"] .meter-segment:nth-child(-n+3) {
+  background-color: var(--color-strong);
+  box-shadow: 0 0 8px var(--color-strong);
+}
+
+.strength-meter-bar[data-score="4"] .meter-segment:nth-child(-n+4) {
+  background-color: var(--color-very-strong);
+  box-shadow: 0 0 8px var(--color-very-strong);
+}
+
+/* Metrics Grid */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.metric-card {
+  background: var(--bg-input);
+  border: 1px solid var(--bg-input-border);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.metric-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.metric-value {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.metric-subtext {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+  margin-top: 0.1rem;
+}
+
+/* --------------------------------------------------------------------------
+   8. Settings & Controls
+   -------------------------------------------------------------------------- */
+.settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.setting-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.setting-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.setting-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.length-display {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.length-display input[type="number"] {
+  width: 54px;
+  background: var(--bg-input);
+  border: 1.5px solid var(--bg-input-border);
+  border-radius: var(--radius-sm);
+  color: var(--accent-cyan);
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 0.25rem;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.length-display input[type="number"]:focus {
+  border-color: var(--accent-cyan);
+}
+
+/* Hide spin buttons for Chrome, Safari, Edge, Opera */
+.length-display input[type=number]::-webkit-inner-spin-button, 
+.length-display input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+.length-display input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.unit-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* Custom Range Slider */
+.slider-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  background: var(--bg-input-border);
+  border-radius: var(--radius-full);
+  outline: none;
+  cursor: pointer;
+}
+
+/* WebKit slider thumb */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--text-primary);
+  border: 3px solid var(--accent-cyan);
+  box-shadow: 0 0 10px var(--accent-cyan-glow);
+  cursor: pointer;
+  transition: transform var(--transition-fast), background-color var(--transition-fast);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  background: var(--accent-cyan-hover);
+}
+
+/* Firefox slider thumb */
+input[type="range"]::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--text-primary);
+  border: 3px solid var(--accent-cyan);
+  box-shadow: 0 0 10px var(--accent-cyan-glow);
+  cursor: pointer;
+  transition: transform var(--transition-fast), background-color var(--transition-fast);
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+  transform: scale(1.15);
+  background: var(--accent-cyan-hover);
+}
+
+input[type="range"]:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 4px;
+}
+
+/* Quick Presets */
+.presets-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.presets-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.preset-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.preset-btn {
+  background: var(--bg-input);
+  border: 1px solid var(--bg-input-border);
+  color: var(--text-secondary);
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.preset-btn:hover {
+  border-color: var(--text-muted);
+  color: var(--text-primary);
+}
+
+.preset-btn.active {
+  background: rgba(6, 182, 212, 0.15);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan-hover);
+  font-weight: 600;
+}
+
+.preset-btn:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+}
+
+/* Checkbox Options Grid */
+.character-options {
+  border: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.options-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 1.25rem;
+}
+
+/* Custom Styled Checkbox */
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 32px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  user-select: none;
+
+}
+
+.custom-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  height: 22px;
+  width: 22px;
+  background-color: var(--bg-input);
+  border: 1.5px solid var(--bg-input-border);
+  border-radius: 6px;
+  transition: all var(--transition-fast);
+}
+
+.custom-checkbox:hover input ~ .checkmark {
+  border-color: var(--text-muted);
+}
+
+.custom-checkbox input:checked ~ .checkmark {
+  background-color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 10px var(--accent-cyan-glow);
+}
+
+.custom-checkbox input:focus-visible ~ .checkmark {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 2px;
+}
+
+.checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 7px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid #000000;
+  border-width: 0 2.5px 2.5px 0;
+  transform: rotate(45deg);
+}
+
+.custom-checkbox input:checked ~ .checkmark::after {
+  display: block;
+}
+
+.checkbox-label-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.char-sample {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.advanced-option {
+  margin-top: 0.25rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--bg-input-border);
+}
+
+/* Warning alert */
+.warning-alert {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.75rem 1rem;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: var(--radius-sm);
+  color: #fca5a5;
+  font-size: 0.85rem;
+}
+
+.alert-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   9. Security Information Box
+   -------------------------------------------------------------------------- */
+.security-info-box {
+  background: rgba(6, 182, 212, 0.05);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.info-icon-wrapper {
+  background: rgba(6, 182, 212, 0.15);
+  color: var(--accent-cyan);
+  padding: 0.65rem;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.info-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.info-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.info-heading {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent-cyan-hover);
+}
+
+.info-text {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.info-text code {
+  font-family: var(--font-mono);
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  color: var(--accent-cyan);
+  font-size: 0.8rem;
+}
+
+/* --------------------------------------------------------------------------
+   10. Portfolio Showcase Section
+   -------------------------------------------------------------------------- */
+.portfolio-section {
+  border-top: 1px solid var(--bg-input-border);
+  padding-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.portfolio-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.portfolio-description {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+.tech-stack {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 0.25rem;
+}
+
+.tech-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.tech-tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tech-tag {
+  background: var(--bg-input);
+  border: 1px solid var(--bg-input-border);
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   11. Toast Notifications
+   -------------------------------------------------------------------------- */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  border: 1px solid var(--accent-emerald);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 15px var(--accent-emerald-glow);
+  padding: 0.85rem 1.5rem;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  z-index: 100;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.toast.hidden {
+  opacity: 0;
+  transform: translate(-50%, 20px) scale(0.95);
+  pointer-events: none;
+}
+
+.toast-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--accent-emerald);
+}
+
+/* Utility Helpers */
+.hidden {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   12. Responsive Breakpoints
+   -------------------------------------------------------------------------- */
+@media (max-width: 520px) {
+  body {
+    padding: 1rem 0.5rem;
+  }
+
+  .generator-card {
+    padding: 1.25rem;
+    gap: 1.35rem;
+  }
+
+  .options-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .password-input {
+    font-size: 1.15rem;
+  }
+
+  .preset-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .toast {
+    width: 90%;
+    text-align: center;
+    justify-content: center;
+  }
+}
